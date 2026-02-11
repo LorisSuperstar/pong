@@ -4,6 +4,7 @@ export component MainWindow {
     width: 1500px;
     height: 1000px;
     callback button_clicked();
+    in-out property <bool> show_button: true;
 
     in-out property <length> square-x: 1500px;
     in-out property <length> square-y: 1000px;
@@ -15,12 +16,14 @@ export component MainWindow {
         height: 50px;
         background: green;
 
-        animate x { duration: 500ms; easing: ease-in-out; }
-        animate y { duration: 500ms; easing: ease-in-out; }
+        animate x { duration: 1000ms; easing: ease-in-out; }
+        animate y { duration: 1000ms; easing: ease-in-out; }
     }
 
-    Button {
+    if (root.show_button) : Button {
         text: "Start Game";
-        clicked => { root.button_clicked(); }
+        clicked => { 
+            root.button_clicked(); 
+        }
     }
 }
