@@ -16,40 +16,40 @@ fn main() {
     let x_middle = x_border_right / 2.0;
 
     ui.on_button_clicked(move || {
-    let ui = weak.upgrade().unwrap();
-    ui.set_show_button(false);
+        let ui = weak.upgrade().unwrap();
+        ui.set_show_button(false);
 
-    
-    ui.set_square_x(x_middle);
-    ui.set_square_y(y_border_top);
+        ui.set_square_x(x_middle);
+        ui.set_square_y(y_border_top);
 
-    let mut rng = rand::rng(); 
+        let mut rng = rand::rng();
 
-    let timer_weak = ui.as_weak();
+        let timer_weak = ui.as_weak();
 
-    let mut isTop = true;
+        let mut isTop = true;
 
-    timer.start(slint::TimerMode::Repeated, std::time::Duration::from_millis(1000), move || {
-        if let Some(ui) = timer_weak.upgrade(){
+        timer.start(
+            slint::TimerMode::Repeated,
+            std::time::Duration::from_millis(1000),
+            move || {
+                if let Some(ui) = timer_weak.upgrade() {
+                    let random_x = rng.random_range(0.0..x_border_right);
+                    let _random_y = rng.random_range(0.0..y_border_bottom);
 
-                let random_x = rng.random_range(0.0..x_border_right);
-                let _random_y = rng.random_range(0.0..y_border_bottom); 
+                    ui.set_square_x(random_x);
+                    if !isTop {
+                        ui.set_square_y(y_border_top);
+                        isTop = true;
+                    } else {
+                        ui.set_square_y(y_border_bottom);
+                        isTop = false;
+                    }
+                }
+            },
+        )
 
-            ui.set_square_x(random_x);
-            if !isTop{
-                ui.set_square_y(y_border_top);
-                isTop = true;
-            }
-            else {
-                ui.set_square_y(y_border_bottom);
-                isTop = false;
-            }
-        }
-    })
-
-    
-});
-    
+        
+    });
 
     ui.run().unwrap();
 }

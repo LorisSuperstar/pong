@@ -4,6 +4,8 @@ export component MainWindow {
     width: 1500px;
     height: 1000px;
     callback button_clicked();
+    callback right();
+    callback left();
     in-out property <bool> show_button: true;
 
     in-out property <length> square-x: 1500px;
@@ -26,4 +28,30 @@ export component MainWindow {
             root.button_clicked(); 
         }
     }
+
+    in-out property <length> player-x: 0px;
+    in-out property <length> player-y: 900px;
+    Rectangle {
+        width: 1000px;
+        height: 50px;
+        background: red;
+        x: player-x;
+        y: player-y;
+    }
+    Button {
+        text: "Right";
+        clicked => {
+            root.right();
+        }
+        x: 1000px;
+    }
+
+    Button {
+        text: "Left";
+        clicked => {
+            root.left();
+        }
+        x: 500px;
+    }
+
 }
